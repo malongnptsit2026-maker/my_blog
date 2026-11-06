@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Blog</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📝 Simple Blog</h1>
+      <p>Create, edit, and delete posts — in memory only</p>
+    </header>
+
+    <div class="toolbar">
+      <a href="/create" class="btn btn-primary">➕ Create New Post</a>
+    </div>
+
+    <section class="post-list">
+      <% if (posts.length === 0) { %>
+        <div class="empty-state">
+          <p>No posts yet. Click <strong>Create New Post</strong> to add one!</p>
+        </div>
+      <% } else { %>
+        <% posts.forEach(post => { %>
+          <article class="post-card">
+            <div class="post-header">
+              <h2><%= post.title %></h2>
+              <span class="post-date"><%= post.date %></span>
+            </div>
+            <p class="post-content"><%= post.content %></p>
+            <div class="post-actions">
+              <a href="/edit/<%= post.id %>" class="btn btn-secondary">✏️ Edit</a>
+              <form action="/delete/<%= post.id %>" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-danger"
+                  onclick="return confirm('Delete this post?')">🗑️ Delete</button>
+              </form>
+            </div>
+          </article>
+        <% }) %>
+      <% } %>
+    </section>
+
+    <footer>
+      <p>Simple Blog — built with Node, Express &amp; EJS</p>
+    </footer>
+  </div>
+</body>
+</html>
